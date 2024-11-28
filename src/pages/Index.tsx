@@ -21,7 +21,7 @@ const Index = () => {
           <AspectRatio ratio={16 / 9}>
             <img 
               src="https://images.unsplash.com/photo-1501854140801-50d01698950b"
-              alt="Artistic landscape"
+              alt="Commission status"
               className="object-cover w-full h-full rounded-lg transform hover:scale-105 transition-transform duration-500"
             />
           </AspectRatio>
