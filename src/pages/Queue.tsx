@@ -18,8 +18,13 @@ const fetchQueue = async () => {
 };
 
 const updateQueue = async (newQueue: any[]) => {
-  localStorage.setItem('commissionQueue', JSON.stringify(newQueue));
-  return newQueue;
+  // Reorganize queue numbers
+  const reorganizedQueue = newQueue.map((client, index) => ({
+    ...client,
+    id: index + 1, // Ensure sequential numbering starting from 1
+  }));
+  localStorage.setItem('commissionQueue', JSON.stringify(reorganizedQueue));
+  return reorganizedQueue;
 };
 
 const Queue = () => {
@@ -54,7 +59,7 @@ const Queue = () => {
 
   const removeFromQueue = (id: number) => {
     const newQueue = queue.filter(client => client.id !== id);
-    mutateQueue(newQueue);
+    mutateQueue(newQueue); // The updateQueue function will handle reordering
     toast.success('Removed from queue');
   };
 
