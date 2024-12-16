@@ -5,28 +5,56 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Users, UserPlus, UserMinus } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-const Queue = () => {
-  const { isAuthenticated } = useAuth();
-  const [queue, setQueue] = useState([
+// Mock API functions - in a real app, these would be actual API calls
+const fetchQueue = async () => {
+  const storedQueue = localStorage.getItem('commissionQueue');
+  return storedQueue ? JSON.parse(storedQueue) : [
     { id: 1, name: 'Client A' },
     { id: 2, name: 'Client B' },
     { id: 3, name: 'Client C' },
-  ]);
+  ];
+};
+
+const updateQueue = async (newQueue: any[]) => {
+  localStorage.setItem('commissionQueue', JSON.stringify(newQueue));
+  return newQueue;
+};
+
+const Queue = () => {
+  const { isAuthenticated } = useAuth();
+  const queryClient = useQueryClient();
   const [newClient, setNewClient] = useState('');
+
+  // Query for fetching queue data
+  const { data: queue = [] } = useQuery({
+    queryKey: ['commissionQueue'],
+    queryFn: fetchQueue,
+  });
+
+  // Mutation for updating queue
+  const { mutate: mutateQueue } = useMutation({
+    mutationFn: updateQueue,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['commissionQueue'] });
+    },
+  });
 
   const addToQueue = () => {
     if (!newClient.trim()) {
       toast.error('Please enter a client name');
       return;
     }
-    setQueue([...queue, { id: queue.length + 1, name: newClient }]);
+    const newQueue = [...queue, { id: queue.length + 1, name: newClient }];
+    mutateQueue(newQueue);
     setNewClient('');
     toast.success('Added to queue');
   };
 
   const removeFromQueue = (id: number) => {
-    setQueue(queue.filter(client => client.id !== id));
+    const newQueue = queue.filter(client => client.id !== id);
+    mutateQueue(newQueue);
     toast.success('Removed from queue');
   };
 
