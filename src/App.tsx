@@ -25,8 +25,16 @@ const App = () => (
             <Route path="/prices" element={<Prices />} />
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
-            {/* Login route is now separate */}
-            <Route path="/admin/login" element={<Adminlogin />} />
+            {/* Login route is now separate
+            <Route path="/admin/login" element={<Adminlogin />} /> */}
+          </Routes>
+        </BrowserRouter>
+        <BrowserRouter basename="/admin">
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/prices" element={<Prices />} />
+            <Route path="/status" element={<Status />} />
+            <Route path="/queue" element={<Queue />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
