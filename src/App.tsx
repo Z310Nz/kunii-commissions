@@ -9,6 +9,7 @@ import Prices from "./pages/Prices";
 import Status from "./pages/Status";
 import Queue from "./pages/Queue";
 import Login from "./pages/admin/Login";
+import Adminlogin from "./pages/admin/Login";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ const App = () => (
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
             {/* Login route is now separate */}
-            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/login" element={<Adminlogin />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
