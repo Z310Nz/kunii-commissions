@@ -8,7 +8,7 @@ import Index from "./pages/Index";
 import Prices from "./pages/Prices";
 import Status from "./pages/Status";
 import Queue from "./pages/Queue";
-import Login from "./pages/Login";
+import Login from "./pages/admin/Login";
 
 const queryClient = new QueryClient();
 
