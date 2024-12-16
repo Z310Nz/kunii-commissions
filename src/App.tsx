@@ -24,7 +24,8 @@ const App = () => (
             <Route path="/prices" element={<Prices />} />
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
-            <Route path="/login" element={<Login />} />
+            {/* Login route is now separate */}
+            <Route path="/admin/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

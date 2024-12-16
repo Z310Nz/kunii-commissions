@@ -21,7 +21,7 @@ const Index = () => {
           <AspectRatio ratio={16 / 9}>
             <img 
               src="https://images.unsplash.com/photo-1501854140801-50d01698950b"
-              alt="Commission status"
+              alt="Commission status page"
               className="object-cover w-full h-full rounded-lg transform hover:scale-105 transition-transform duration-500"
             />
           </AspectRatio>
@@ -86,14 +86,6 @@ const Index = () => {
               className="w-full bg-white/80 backdrop-blur border-2 hover:bg-secondary/50 transition-all duration-300 h-16 text-lg"
             >
               Check Queue Position
-            </Button>
-          </Link>
-          <Link to="/login">
-            <Button 
-              variant="outline" 
-              className="w-full bg-white/80 backdrop-blur border-2 hover:bg-secondary/50 transition-all duration-300 h-16 text-lg"
-            >
-              Admin Login
             </Button>
           </Link>
         </div>
