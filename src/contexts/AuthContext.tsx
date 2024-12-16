@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
-import { toast } from 'sonner';
+import React, { createContext, useContext, useState } from "react";
+import { toast } from "sonner";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -14,17 +14,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     // In a real app, this would make an API call
-    if (username === 'admin' && password === 'password') {
+    if (username === "haiguulogin" && password === "rahutisk2n5h5r2") {
       setIsAuthenticated(true);
-      toast.success('Logged in successfully');
+      toast.success("Logged in successfully");
     } else {
-      toast.error('Invalid credentials');
+      toast.error("Invalid credentials");
     }
   };
 
   const logout = () => {
     setIsAuthenticated(false);
-    toast.success('Logged out successfully');
+    toast.success("Logged out successfully");
   };
 
   return (
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
