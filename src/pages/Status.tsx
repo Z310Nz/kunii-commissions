@@ -1,12 +1,40 @@
 import { Card } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
+
+// Mock API function - in a real app, this would be an actual API call
+const fetchCommissionStatus = async () => {
+  // For demo purposes, we'll use localStorage
+  return localStorage.getItem('commissionStatus') === 'true';
+};
+
+const updateCommissionStatus = async (isOpen: boolean) => {
+  // For demo purposes, we'll use localStorage
+  localStorage.setItem('commissionStatus', String(isOpen));
+  return isOpen;
+};
 
 const Status = () => {
   const { isAuthenticated } = useAuth();
-  const [isOpen, setIsOpen] = useState(true);
+  const queryClient = useQueryClient();
+
+  // Query for fetching commission status
+  const { data: isOpen = true } = useQuery({
+    queryKey: ['commissionStatus'],
+    queryFn: fetchCommissionStatus,
+  });
+
+  // Mutation for updating commission status
+  const { mutate: toggleStatus } = useMutation({
+    mutationFn: updateCommissionStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['commissionStatus'] });
+      toast.success(`Commissions are now ${isOpen ? 'CLOSED' : 'OPEN'}`);
+    },
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
@@ -27,7 +55,7 @@ const Status = () => {
             
             {isAuthenticated && (
               <Button 
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => toggleStatus(!isOpen)}
                 variant={isOpen ? "destructive" : "default"}
                 className="mt-6 text-lg px-8 py-6"
               >
