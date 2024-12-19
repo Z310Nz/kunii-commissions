@@ -2,7 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, X, Image } from 'lucide-react';
+import { Upload, X, Image, Clock } from 'lucide-react';  // Added Clock import
 import { PriceTier } from '@/types/prices';
 
 interface PriceTierCardProps {
