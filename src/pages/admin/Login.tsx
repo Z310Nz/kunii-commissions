@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
-import { Lock, ListChecks, CheckSquare } from 'lucide-react';
+import { Lock, ListChecks, CheckSquare, Image } from 'lucide-react';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -43,6 +43,15 @@ const Login = () => {
               >
                 <ListChecks className="w-5 h-5" />
                 Commission Queue
+              </Button>
+
+              <Button 
+                onClick={() => navigate('/prices')}
+                className="w-full py-6 flex items-center justify-center gap-2 text-lg"
+                variant="outline"
+              >
+                <Image className="w-5 h-5" />
+                Commission Prices
               </Button>
             </div>
           </Card>
