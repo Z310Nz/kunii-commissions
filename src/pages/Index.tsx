@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Mail, Link as LinkIcon, Palette, Instagram } from 'lucide-react';
+import { DollarSign, CheckSquare, ListOrdered } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
-      <div className="max-w-4xl mx-auto space-y-12 animate-fade-in">
+      <div className="max-w-6xl mx-auto space-y-12 animate-fade-in">
         {/* Hero Section */}
         <div className="text-center space-y-6">
           <h1 className="text-6xl font-bold text-[#1A1F2C] tracking-tight">Artistic Commissions</h1>
@@ -16,78 +15,83 @@ const Index = () => {
           </p>
         </div>
 
-        {/* Featured Image */}
-        <Card className="overflow-hidden border-none shadow-lg">
-          <AspectRatio ratio={16 / 9}>
-            <img 
-              src="https://images.unsplash.com/photo-1501854140801-50d01698950b"
-              alt="Commission status page"
-              className="object-cover w-full h-full rounded-lg transform hover:scale-105 transition-transform duration-500"
-            />
-          </AspectRatio>
-        </Card>
+        {/* Main Grid */}
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Prices Card */}
+          <Link to="/prices" className="transform hover:scale-105 transition-transform duration-300">
+            <Card className="h-full bg-white/80 backdrop-blur border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="text-center">
+                <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit">
+                  <DollarSign className="w-8 h-8 text-primary" />
+                </div>
+                <CardTitle className="text-2xl mt-4">Commission Prices</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-600">
+                View our detailed pricing structure for different commission types
+              </CardContent>
+            </Card>
+          </Link>
 
-        {/* Contact & Links Section */}
-        <Card className="p-8 bg-white/80 backdrop-blur border-none shadow-lg">
-          <h2 className="text-2xl font-semibold mb-6 text-[#1A1F2C] flex items-center gap-2">
-            <Palette className="w-6 h-6 text-primary" />
-            Contact & Links
-          </h2>
-          <div className="grid gap-6">
+          {/* Status Card */}
+          <Link to="/status" className="transform hover:scale-105 transition-transform duration-300">
+            <Card className="h-full bg-white/80 backdrop-blur border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="text-center">
+                <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit">
+                  <CheckSquare className="w-8 h-8 text-primary" />
+                </div>
+                <CardTitle className="text-2xl mt-4">Commission Status</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-600">
+                Check if commissions are currently open or closed
+              </CardContent>
+            </Card>
+          </Link>
+
+          {/* Queue Card */}
+          <Link to="/queue" className="transform hover:scale-105 transition-transform duration-300">
+            <Card className="h-full bg-white/80 backdrop-blur border-none shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="text-center">
+                <div className="mx-auto p-3 bg-primary/10 rounded-full w-fit">
+                  <ListOrdered className="w-8 h-8 text-primary" />
+                </div>
+                <CardTitle className="text-2xl mt-4">Commission Queue</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center text-gray-600">
+                View current commission queue and position tracking
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
+        {/* Contact Section */}
+        <div className="text-center space-y-6 mt-12">
+          <h2 className="text-3xl font-semibold text-[#1A1F2C]">Get in Touch</h2>
+          <div className="flex flex-col items-center gap-4">
             <a 
               href="mailto:artist@example.com" 
-              className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors p-3 rounded-lg hover:bg-secondary/50"
+              className="text-gray-600 hover:text-primary transition-colors"
             >
-              <Mail className="w-5 h-5" />
               artist@example.com
             </a>
-            <a 
-              href="https://instagram.com/artist" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors p-3 rounded-lg hover:bg-secondary/50"
-            >
-              <Instagram className="w-5 h-5" />
-              @artist
-            </a>
-            <a 
-              href="https://twitter.com/artist" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="flex items-center gap-3 text-gray-700 hover:text-primary transition-colors p-3 rounded-lg hover:bg-secondary/50"
-            >
-              <LinkIcon className="w-5 h-5" />
-              Twitter
-            </a>
+            <div className="flex gap-4">
+              <a 
+                href="https://instagram.com/artist" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary transition-colors"
+              >
+                Instagram
+              </a>
+              <a 
+                href="https://twitter.com/artist" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary transition-colors"
+              >
+                Twitter
+              </a>
+            </div>
           </div>
-        </Card>
-
-        {/* Navigation Buttons */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <Link to="/prices">
-            <Button 
-              variant="outline" 
-              className="w-full bg-white/80 backdrop-blur border-2 hover:bg-secondary/50 transition-all duration-300 h-16 text-lg"
-            >
-              View Commission Prices
-            </Button>
-          </Link>
-          <Link to="/status">
-            <Button 
-              variant="outline" 
-              className="w-full bg-white/80 backdrop-blur border-2 hover:bg-secondary/50 transition-all duration-300 h-16 text-lg"
-            >
-              Commission Status
-            </Button>
-          </Link>
-          <Link to="/queue">
-            <Button 
-              variant="outline" 
-              className="w-full bg-white/80 backdrop-blur border-2 hover:bg-secondary/50 transition-all duration-300 h-16 text-lg"
-            >
-              Check Queue Position
-            </Button>
-          </Link>
         </div>
       </div>
     </div>
