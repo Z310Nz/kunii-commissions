@@ -9,7 +9,7 @@ const AdminPrices = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<PriceTier | null>(null);
 
-  const { data: tiers = [] } = useQuery({
+  const { data: tiers = defaultTiers } = useQuery({
     queryKey: ['prices'],
     queryFn: async () => {
       // In a real app, this would fetch from your API
