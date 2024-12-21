@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { PriceTier, defaultTiers } from '@/types/prices';
+import { PriceTier } from '@/types/prices';
 import { PriceTierCard } from '@/components/admin/PriceTierCard';
 
 const AdminPrices = () => {
@@ -69,12 +69,16 @@ const AdminPrices = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold text-center mb-4 text-[#1A1F2C]">Manage Commission Prices</h1>
-        <p className="text-gray-600 text-center mb-12">Edit commission tiers and pricing information</p>
+    <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-4 sm:p-6 lg:p-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-4 text-[#1A1F2C]">
+          Manage Commission Prices
+        </h1>
+        <p className="text-gray-600 text-center mb-8 sm:mb-12">
+          Edit commission tiers and pricing information
+        </p>
         
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {tiers.map((tier) => (
             <PriceTierCard
               key={tier.id}
