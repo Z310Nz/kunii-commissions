@@ -11,6 +11,7 @@ import Queue from "./pages/Queue";
 import Login from "./pages/admin/Login";
 import Adminlogin from "./pages/admin/Login";
 import AdminPrices from "./pages/admin/Prices";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -23,9 +24,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/prices" element={<Prices />} />
+            {/* <Route path="/prices" element={<Prices />} />
             <Route path="/status" element={<Status />} />
-            <Route path="/queue" element={<Queue />} />
+            <Route path="/queue" element={<Queue />} /> */}
             {/* Login route is now separate
             <Route path="/admin/login" element={<Adminlogin />} /> */}
           </Routes>
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/prices" element={<AdminPrices />} />
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
+            <Route path="/contact" element={<Contact />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
