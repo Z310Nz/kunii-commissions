@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import BackButton from '@/components/BackButton';
 
 // Mock API function - in a real app, this would be an actual API call
 const fetchCommissionStatus = async () => {
@@ -38,6 +39,7 @@ const Status = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+      <BackButton />
       <div className="max-w-4xl mx-auto animate-fade-in">
         <h1 className="text-5xl font-bold text-center mb-8 text-[#1A1F2C]">Commission Status</h1>
         

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Users, UserPlus, UserMinus } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import BackButton from '@/components/BackButton';
 
 // Mock API functions - in a real app, these would be actual API calls
 const fetchQueue = async () => {
@@ -65,6 +66,7 @@ const Queue = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+      <BackButton />
       <div className="max-w-4xl mx-auto animate-fade-in">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4 text-[#1A1F2C]">Commission Queue</h1>

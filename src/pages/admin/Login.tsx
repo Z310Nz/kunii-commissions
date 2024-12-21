@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { Lock, ListChecks, CheckSquare, Image } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -20,6 +21,7 @@ const Login = () => {
   if (isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+        <BackButton />
         <div className="max-w-md mx-auto animate-fade-in">
           <Card className="p-8 bg-white/80 backdrop-blur border-none shadow-lg">
             <div className="text-center mb-8">
@@ -62,6 +64,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+      <BackButton />
       <div className="max-w-md mx-auto animate-fade-in">
         <Card className="p-8 bg-white/80 backdrop-blur border-none shadow-lg">
           <div className="text-center mb-8">

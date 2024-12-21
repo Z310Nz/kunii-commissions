@@ -1,20 +1,19 @@
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Clock, Maximize2, FileText, Image } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { PriceTier, defaultTiers } from '@/types/prices';
+import BackButton from '@/components/BackButton';
 
 const Prices = () => {
   const { data: tiers = defaultTiers } = useQuery({
     queryKey: ['prices'],
     queryFn: async () => {
-      // In a real app, this would fetch from your API
       return defaultTiers;
     }
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-4 md:p-8">
+      <BackButton />
       <div className="max-w-6xl mx-auto animate-fade-in">
         <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 text-[#1A1F2C]">Commission Prices</h1>
         <p className="text-gray-600 text-center mb-8 md:mb-12 max-w-2xl mx-auto">

@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { PriceTier, defaultTiers } from '@/types/prices';
 import { PriceTierCard } from '@/components/admin/PriceTierCard';
+import BackButton from '@/components/BackButton';
 
 const AdminPrices = () => {
   const queryClient = useQueryClient();
@@ -70,6 +71,7 @@ const AdminPrices = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-4 md:p-8">
+      <BackButton />
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 text-[#1A1F2C]">Manage Commission Prices</h1>
         <p className="text-gray-600 text-center mb-8 md:mb-12">Edit commission tiers and pricing information</p>
