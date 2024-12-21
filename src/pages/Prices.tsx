@@ -1,6 +1,8 @@
 import { Card } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { PriceTier, defaultTiers } from '@/types/prices';
+import { Button } from '@/components/ui/button';
+import { Image, Maximize2, Clock, FileText } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 
 const Prices = () => {
