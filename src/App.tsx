@@ -10,6 +10,7 @@ import Status from "./pages/Status";
 import Queue from "./pages/Queue";
 import Login from "./pages/admin/Login";
 import Adminlogin from "./pages/admin/Login";
+import AdminPrices from "./pages/admin/Prices";
 
 const queryClient = new QueryClient();
 
@@ -32,7 +33,7 @@ const App = () => (
         <BrowserRouter basename="/admin">
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/prices" element={<Prices />} />
+            <Route path="/prices" element={<AdminPrices />} />
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
           </Routes>
