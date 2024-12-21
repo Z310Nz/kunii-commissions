@@ -69,12 +69,12 @@ const AdminPrices = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+    <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl font-bold text-center mb-4 text-[#1A1F2C]">Manage Commission Prices</h1>
-        <p className="text-gray-600 text-center mb-12">Edit commission tiers and pricing information</p>
+        <h1 className="text-3xl md:text-5xl font-bold text-center mb-4 text-[#1A1F2C]">Manage Commission Prices</h1>
+        <p className="text-gray-600 text-center mb-8 md:mb-12">Edit commission tiers and pricing information</p>
         
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
           {tiers.map((tier) => (
             <PriceTierCard
               key={tier.id}
