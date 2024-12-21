@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useAuth } from '@/contexts/AuthContext';
-import { Lock, ListChecks, CheckSquare, Image } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useAuth } from "@/contexts/AuthContext";
+import { Lock, ListChecks, CheckSquare, Image, Contact } from "lucide-react";
+import BackButton from "@/components/BackButton";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -25,21 +25,23 @@ const Login = () => {
         <div className="max-w-md mx-auto animate-fade-in">
           <Card className="p-8 bg-white/80 backdrop-blur border-none shadow-lg">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-[#1A1F2C] mb-6">Admin Dashboard</h1>
+              <h1 className="text-3xl font-bold text-[#1A1F2C] mb-6">
+                Admin Dashboard
+              </h1>
               <p className="text-gray-600 mb-8">Select a page to manage:</p>
             </div>
-            
+
             <div className="space-y-4">
-              <Button 
-                onClick={() => navigate('/status')}
+              <Button
+                onClick={() => navigate("/status")}
                 className="w-full py-6 flex items-center justify-center gap-2 text-lg"
               >
                 <CheckSquare className="w-5 h-5" />
                 Commission Status
               </Button>
-              
-              <Button 
-                onClick={() => navigate('/queue')}
+
+              <Button
+                onClick={() => navigate("/queue")}
                 className="w-full py-6 flex items-center justify-center gap-2 text-lg"
                 variant="secondary"
               >
@@ -47,13 +49,31 @@ const Login = () => {
                 Commission Queue
               </Button>
 
-              <Button 
-                onClick={() => navigate('/prices')}
+              <Button
+                onClick={() => navigate("/prices")}
                 className="w-full py-6 flex items-center justify-center gap-2 text-lg"
                 variant="outline"
               >
                 <Image className="w-5 h-5" />
                 Commission Prices
+              </Button>
+
+              <Button
+                onClick={() => navigate("/contact")}
+                className="w-full py-6 flex items-center justify-center gap-2 text-lg"
+                variant="outline"
+              >
+                <Contact className="w-5 h-5" />
+                Contact
+              </Button>
+
+              <Button
+                onClick={() => navigate("/logout")}
+                className="w-full py-6 flex items-center justify-center gap-2 text-lg"
+                variant="destructive"
+              >
+                <Lock className="w-5 h-5" />
+                Logout
               </Button>
             </div>
           </Card>
@@ -73,7 +93,7 @@ const Login = () => {
             </div>
             <h1 className="text-3xl font-bold text-[#1A1F2C]">Admin Login</h1>
           </div>
-          
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <Input
