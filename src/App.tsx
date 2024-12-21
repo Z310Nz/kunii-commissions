@@ -11,7 +11,6 @@ import Queue from "./pages/Queue";
 import Login from "./pages/admin/Login";
 import Adminlogin from "./pages/admin/Login";
 import AdminPrices from "./pages/admin/Prices";
-import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -33,11 +32,10 @@ const App = () => (
         </BrowserRouter>
         <BrowserRouter basename="/admin">
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/prices" element={<AdminPrices />} />
             <Route path="/status" element={<Status />} />
             <Route path="/queue" element={<Queue />} />
-            <Route path="/contact" element={<Contact />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

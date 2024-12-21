@@ -38,7 +38,7 @@ const Status = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
+    <div className="h-[50%] bg-gradient-to-b from-[#D3E4FD] to-white p-8">
       <BackButton />
       <div className="max-w-4xl mx-auto animate-fade-in">
         <h1 className="text-5xl font-bold text-center mb-8 text-[#1A1F2C]">
@@ -73,42 +73,6 @@ const Status = () => {
           </div>
         </Card>
       </div>
-      {/* <div className="max-w-4xl mx-auto animate-fade-in">
-        <div className="text-center space-y-4 md:space-y-6">
-          <div className="inline-block p-3 bg-primary/10 rounded-full">
-            <Mail className="w-6 h-6 md:w-8 md:h-8 text-primary" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1A1F2C]">
-            Get in Touch
-          </h2>
-          <div className="flex flex-col items-center gap-4">
-            <a
-              href="mailto:artist@example.com"
-              className="text-gray-600 hover:text-primary transition-colors"
-            >
-              artist@example.com
-            </a>
-            <div className="flex gap-4">
-              <a
-                href="https://instagram.com/artist"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://twitter.com/artist"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors"
-              >
-                Twitter
-              </a>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

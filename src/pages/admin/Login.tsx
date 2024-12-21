@@ -59,16 +59,7 @@ const Login = () => {
               </Button>
 
               <Button
-                onClick={() => navigate("/contact")}
-                className="w-full py-6 flex items-center justify-center gap-2 text-lg"
-                variant="outline"
-              >
-                <Contact className="w-5 h-5" />
-                Contact
-              </Button>
-
-              <Button
-                onClick={() => navigate("/logout")}
+                onClick={() => navigate("/")}
                 className="w-full py-6 flex items-center justify-center gap-2 text-lg"
                 variant="destructive"
               >
