@@ -1,20 +1,20 @@
-import { Card } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { CheckCircle2, XCircle } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import BackButton from '@/components/BackButton';
+import { Card } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, XCircle, Mail } from "lucide-react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import BackButton from "@/components/BackButton";
 
 // Mock API function - in a real app, this would be an actual API call
 const fetchCommissionStatus = async () => {
   // For demo purposes, we'll use localStorage
-  return localStorage.getItem('commissionStatus') === 'true';
+  return localStorage.getItem("commissionStatus") === "true";
 };
 
 const updateCommissionStatus = async (isOpen: boolean) => {
   // For demo purposes, we'll use localStorage
-  localStorage.setItem('commissionStatus', String(isOpen));
+  localStorage.setItem("commissionStatus", String(isOpen));
   return isOpen;
 };
 
@@ -24,7 +24,7 @@ const Status = () => {
 
   // Query for fetching commission status
   const { data: isOpen = true } = useQuery({
-    queryKey: ['commissionStatus'],
+    queryKey: ["commissionStatus"],
     queryFn: fetchCommissionStatus,
   });
 
@@ -32,8 +32,8 @@ const Status = () => {
   const { mutate: toggleStatus } = useMutation({
     mutationFn: updateCommissionStatus,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['commissionStatus'] });
-      toast.success(`Commissions are now ${isOpen ? 'CLOSED' : 'OPEN'}`);
+      queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
+      toast.success(`Commissions are now ${isOpen ? "CLOSED" : "OPEN"}`);
     },
   });
 
@@ -41,8 +41,10 @@ const Status = () => {
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-8">
       <BackButton />
       <div className="max-w-4xl mx-auto animate-fade-in">
-        <h1 className="text-5xl font-bold text-center mb-8 text-[#1A1F2C]">Commission Status</h1>
-        
+        <h1 className="text-5xl font-bold text-center mb-8 text-[#1A1F2C]">
+          Commission Status
+        </h1>
+
         <Card className="p-12 text-center bg-white/80 backdrop-blur border-none shadow-lg">
           <div className="flex flex-col items-center gap-6">
             {isOpen ? (
@@ -50,23 +52,63 @@ const Status = () => {
             ) : (
               <XCircle className="w-24 h-24 text-red-500" />
             )}
-            
-            <div className={`text-3xl font-semibold ${isOpen ? 'text-green-500' : 'text-red-500'}`}>
-              Commissions are currently {isOpen ? 'OPEN' : 'CLOSED'}
+
+            <div
+              className={`text-3xl font-semibold ${
+                isOpen ? "text-green-500" : "text-red-500"
+              }`}
+            >
+              Commissions are currently {isOpen ? "OPEN" : "CLOSED"}
             </div>
-            
+
             {isAuthenticated && (
-              <Button 
+              <Button
                 onClick={() => toggleStatus(!isOpen)}
                 variant={isOpen ? "destructive" : "default"}
                 className="mt-6 text-lg px-8 py-6"
               >
-                {isOpen ? 'Close Commissions' : 'Open Commissions'}
+                {isOpen ? "Close Commissions" : "Open Commissions"}
               </Button>
             )}
           </div>
         </Card>
       </div>
+      {/* <div className="max-w-4xl mx-auto animate-fade-in">
+        <div className="text-center space-y-4 md:space-y-6">
+          <div className="inline-block p-3 bg-primary/10 rounded-full">
+            <Mail className="w-6 h-6 md:w-8 md:h-8 text-primary" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1A1F2C]">
+            Get in Touch
+          </h2>
+          <div className="flex flex-col items-center gap-4">
+            <a
+              href="mailto:artist@example.com"
+              className="text-gray-600 hover:text-primary transition-colors"
+            >
+              artist@example.com
+            </a>
+            <div className="flex gap-4">
+              <a
+                href="https://instagram.com/artist"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary transition-colors"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://twitter.com/artist"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-primary transition-colors"
+              >
+                Twitter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div> */}
     </div>
   );
 };
