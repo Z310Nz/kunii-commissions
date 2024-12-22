@@ -23,11 +23,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            {/* <Route path="/prices" element={<Prices />} />
+            <Route path="/prices" element={<Prices />} />
             <Route path="/status" element={<Status />} />
-            <Route path="/queue" element={<Queue />} /> */}
-            {/* Login route is now separate
-            <Route path="/admin/login" element={<Adminlogin />} /> */}
+            <Route path="/queue" element={<Queue />} />
           </Routes>
         </BrowserRouter>
         <BrowserRouter basename="/admin">
