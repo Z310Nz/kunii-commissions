@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 import { PriceTier, defaultTiers } from '@/types/prices';
 import { PriceTierCard } from '@/components/admin/PriceTierCard';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';  // Added X icon import
 import BackButton from '@/components/BackButton';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
