@@ -2,7 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, X, Image, Clock, Maximize2, FileText } from 'lucide-react';
+import { Upload, X, Image, Clock, Maximize2, FileText, Trash2 } from 'lucide-react';
 import { PriceTier } from '@/types/prices';
 
 interface PriceTierCardProps {
@@ -12,6 +12,7 @@ interface PriceTierCardProps {
   onEdit: (tier: PriceTier) => void;
   onSave: (tier: PriceTier) => void;
   onCancel: () => void;
+  onDelete: (tierId: string) => void;
   onImageUpload: (event: React.ChangeEvent<HTMLInputElement>, tierId: string) => void;
   onFeatureChange: (index: number, value: string) => void;
   setEditForm: (form: PriceTier | null) => void;
@@ -24,6 +25,7 @@ export const PriceTierCard = ({
   onEdit,
   onSave,
   onCancel,
+  onDelete,
   onImageUpload,
   onFeatureChange,
   setEditForm
@@ -185,13 +187,22 @@ export const PriceTierCard = ({
         ))}
       </ul>
       
-      <Button 
-        variant="outline"
-        className="w-full text-sm md:text-base"
-        onClick={() => onEdit(tier)}
-      >
-        Edit
-      </Button>
+      <div className="flex gap-2">
+        <Button 
+          variant="outline"
+          className="flex-1 text-sm md:text-base"
+          onClick={() => onEdit(tier)}
+        >
+          Edit
+        </Button>
+        <Button 
+          variant="destructive"
+          className="text-sm md:text-base"
+          onClick={() => onDelete(tier.id)}
+        >
+          <Trash2 className="w-4 h-4" />
+        </Button>
+      </div>
     </Card>
   );
 };

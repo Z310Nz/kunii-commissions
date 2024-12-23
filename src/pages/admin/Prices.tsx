@@ -18,7 +18,7 @@ const AdminPrices = () => {
   const { data: tiers = [] } = useQuery({
     queryKey: ["prices"],
     queryFn: getPriceTiers,
-    staleTime: Infinity, // Prevent automatic refetching
+    staleTime: Infinity,
   });
 
   const updateMutation = useMutation({
@@ -127,10 +127,7 @@ const AdminPrices = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">Manage Commission Prices</h1>
-          <Button
-            onClick={handleAdd}
-            className="bg-primary hover:bg-primary/90"
-          >
+          <Button onClick={handleAdd} className="bg-primary hover:bg-primary/90">
             <Plus className="w-4 h-4 mr-2" />
             Add New Tier
           </Button>
@@ -146,6 +143,7 @@ const AdminPrices = () => {
               onEdit={handleEdit}
               onSave={handleSave}
               onCancel={() => setEditingId(null)}
+              onDelete={handleDelete}
               onImageUpload={handleImageUpload}
               onFeatureChange={handleFeatureChange}
               setEditForm={setEditForm}
