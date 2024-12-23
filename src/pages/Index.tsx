@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Status from "./Status";
 import Queue from "./Queue";
 import Prices from "./Prices";
@@ -77,6 +78,14 @@ const Index = () => {
         {/* Hero Section */}
         <div className="py-16 px-8">
           <div className="max-w-6xl mx-auto text-center space-y-6 animate-fade-in">
+            <Avatar className="mx-auto mb-4 w-32 h-32">
+              <AvatarImage 
+                src="/placeholder.svg" 
+                alt="Kunii Artist Profile" 
+                className="object-cover"
+              />
+              <AvatarFallback>KC</AvatarFallback>
+            </Avatar>
             <h1 className="text-6xl font-bold text-[#1A1F2C] tracking-tight">
               Kunii Commissions
             </h1>
