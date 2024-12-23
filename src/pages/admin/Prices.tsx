@@ -6,7 +6,7 @@ import { useState } from "react";
 import { PriceTierCard } from "@/components/admin/PriceTierCard";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { getPriceTiers, savePriceTiers } from "@/utils/priceTierStorage";
+import { getPriceTiers, savePriceTiers, deletePriceTier, uploadImage } from "@/utils/priceTierStorage";
 import BackButton from "@/components/BackButton";
 
 const AdminPrices = () => {
@@ -17,48 +17,51 @@ const AdminPrices = () => {
 
   const { data: tiers = [] } = useQuery({
     queryKey: ["prices"],
-    queryFn: getPriceTiers,
-    staleTime: Infinity,
+    queryFn: getPriceTiers
   });
 
   const updateMutation = useMutation({
     mutationFn: async (updatedTier: PriceTier) => {
-      const updatedTiers = tiers.map((tier) =>
-        tier.id === updatedTier.id ? updatedTier : tier
-      );
-      savePriceTiers(updatedTiers);
-      return updatedTiers;
+      await savePriceTiers(updatedTier);
+      return updatedTier;
     },
-    onSuccess: (updatedTiers) => {
-      queryClient.setQueryData(["prices"], updatedTiers);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["prices"] });
       toast.success("Price tier updated successfully");
       setEditingId(null);
       setEditForm(null);
     },
+    onError: (error) => {
+      toast.error("Failed to update price tier");
+      console.error("Update error:", error);
+    }
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (tierId: string) => {
-      const updatedTiers = tiers.filter((tier) => tier.id !== tierId);
-      savePriceTiers(updatedTiers);
-      return updatedTiers;
-    },
-    onSuccess: (updatedTiers) => {
-      queryClient.setQueryData(["prices"], updatedTiers);
+    mutationFn: deletePriceTier,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["prices"] });
       toast.success("Price tier deleted successfully");
     },
+    onError: (error) => {
+      toast.error("Failed to delete price tier");
+      console.error("Delete error:", error);
+    }
   });
 
   const addMutation = useMutation({
     mutationFn: async (newTier: PriceTier) => {
-      const updatedTiers = [...tiers, newTier];
-      savePriceTiers(updatedTiers);
-      return updatedTiers;
+      await savePriceTiers(newTier);
+      return newTier;
     },
-    onSuccess: (updatedTiers) => {
-      queryClient.setQueryData(["prices"], updatedTiers);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["prices"] });
       toast.success("New price tier added successfully");
     },
+    onError: (error) => {
+      toast.error("Failed to add price tier");
+      console.error("Add error:", error);
+    }
   });
 
   const handleEdit = (tier: PriceTier) => {
@@ -95,15 +98,20 @@ const AdminPrices = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
-    const tierToUpdate = tiers.find((t) => t.id === tierId);
+    try {
+      const imageUrl = await uploadImage(file);
+      const tierToUpdate = tiers.find((t) => t.id === tierId);
 
-    if (tierToUpdate) {
-      const updatedTier = {
-        ...tierToUpdate,
-        imageUrl,
-      };
-      updateMutation.mutate(updatedTier);
+      if (tierToUpdate) {
+        const updatedTier = {
+          ...tierToUpdate,
+          imageUrl,
+        };
+        updateMutation.mutate(updatedTier);
+      }
+    } catch (error) {
+      toast.error("Failed to upload image");
+      console.error("Image upload error:", error);
     }
   };
 

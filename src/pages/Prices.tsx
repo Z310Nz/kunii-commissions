@@ -6,11 +6,18 @@ import BackButton from '@/components/BackButton';
 import { getPriceTiers } from '@/utils/priceTierStorage';
 
 const Prices = () => {
-  const { data: tiers = [] } = useQuery({
+  const { data: tiers = [], isLoading, error } = useQuery({
     queryKey: ['prices'],
-    queryFn: getPriceTiers,
-    staleTime: Infinity, // Prevent automatic refetching
+    queryFn: getPriceTiers
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading prices</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#D3E4FD] to-white p-4 md:p-8">
