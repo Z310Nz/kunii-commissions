@@ -5,6 +5,7 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
+import { Switch } from "@/components/ui/switch";
 import { getCommissionStatus, updateCommissionStatus } from "@/utils/commissionStatusStorage";
 
 const Status = () => {
@@ -16,7 +17,7 @@ const Status = () => {
     queryFn: getCommissionStatus,
   });
 
-  const { mutate: toggleStatus } = useMutation({
+  const { mutate: toggleStatus, isPending } = useMutation({
     mutationFn: updateCommissionStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
@@ -29,7 +30,11 @@ const Status = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-[200px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
   return (
@@ -57,13 +62,16 @@ const Status = () => {
             </div>
 
             {isAuthenticated && (
-              <Button
-                onClick={() => toggleStatus(!isOpen)}
-                variant={isOpen ? "destructive" : "default"}
-                className="mt-6 text-lg px-8 py-6"
-              >
-                {isOpen ? "Close Commissions" : "Open Commissions"}
-              </Button>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-500">Closed</span>
+                <Switch
+                  checked={isOpen}
+                  onCheckedChange={() => toggleStatus(!isOpen)}
+                  disabled={isPending}
+                  className="data-[state=checked]:bg-green-500"
+                />
+                <span className="text-sm text-gray-500">Open</span>
+              </div>
             )}
           </div>
         </Card>
