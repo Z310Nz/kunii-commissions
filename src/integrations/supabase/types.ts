@@ -9,6 +9,45 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      commission_queue: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          position: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          position: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          position?: number
+        }
+        Relationships: []
+      }
+      commission_status: {
+        Row: {
+          id: string
+          is_open: boolean
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          is_open?: boolean
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          is_open?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
       price_tiers: {
         Row: {
           created_at: string

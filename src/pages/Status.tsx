@@ -1,41 +1,36 @@
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, Mail } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
-
-// Mock API function - in a real app, this would be an actual API call
-const fetchCommissionStatus = async () => {
-  // For demo purposes, we'll use localStorage
-  return localStorage.getItem("commissionStatus") === "true";
-};
-
-const updateCommissionStatus = async (isOpen: boolean) => {
-  // For demo purposes, we'll use localStorage
-  localStorage.setItem("commissionStatus", String(isOpen));
-  return isOpen;
-};
+import { getCommissionStatus, updateCommissionStatus } from "@/utils/commissionStatusStorage";
 
 const Status = () => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
-  // Query for fetching commission status
-  const { data: isOpen = true } = useQuery({
+  const { data: isOpen = true, isLoading } = useQuery({
     queryKey: ["commissionStatus"],
-    queryFn: fetchCommissionStatus,
+    queryFn: getCommissionStatus,
   });
 
-  // Mutation for updating commission status
   const { mutate: toggleStatus } = useMutation({
     mutationFn: updateCommissionStatus,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
       toast.success(`Commissions are now ${isOpen ? "CLOSED" : "OPEN"}`);
     },
+    onError: (error) => {
+      toast.error("Failed to update commission status");
+      console.error("Error updating status:", error);
+    },
   });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="h-[50%] bg-gradient-to-b from-[#D3E4FD] to-white p-8">

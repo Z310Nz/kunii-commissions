@@ -7,64 +7,54 @@ import { toast } from "sonner";
 import { Users, UserPlus, UserMinus } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import BackButton from "@/components/BackButton";
-
-// Mock API functions - in a real app, these would be actual API calls
-const fetchQueue = async () => {
-  const storedQueue = localStorage.getItem("commissionQueue");
-  return storedQueue
-    ? JSON.parse(storedQueue)
-    : [
-        { id: 1, name: "Client A" },
-        { id: 2, name: "Client B" },
-        { id: 3, name: "Client C" },
-      ];
-};
-
-const updateQueue = async (newQueue: any[]) => {
-  // Reorganize queue numbers
-  const reorganizedQueue = newQueue.map((client, index) => ({
-    ...client,
-    id: index + 1, // Ensure sequential numbering starting from 1
-  }));
-  localStorage.setItem("commissionQueue", JSON.stringify(reorganizedQueue));
-  return reorganizedQueue;
-};
+import { getCommissionQueue, addToQueue, removeFromQueue } from "@/utils/commissionQueueStorage";
 
 const Queue = () => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
   const [newClient, setNewClient] = useState("");
 
-  // Query for fetching queue data
-  const { data: queue = [] } = useQuery({
+  const { data: queue = [], isLoading } = useQuery({
     queryKey: ["commissionQueue"],
-    queryFn: fetchQueue,
+    queryFn: getCommissionQueue,
   });
 
-  // Mutation for updating queue
-  const { mutate: mutateQueue } = useMutation({
-    mutationFn: updateQueue,
+  const addMutation = useMutation({
+    mutationFn: addToQueue,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commissionQueue"] });
+      setNewClient("");
+      toast.success("Added to queue");
+    },
+    onError: (error) => {
+      toast.error("Failed to add to queue");
+      console.error("Add error:", error);
     },
   });
 
-  const addToQueue = () => {
+  const removeMutation = useMutation({
+    mutationFn: removeFromQueue,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["commissionQueue"] });
+      toast.success("Removed from queue");
+    },
+    onError: (error) => {
+      toast.error("Failed to remove from queue");
+      console.error("Remove error:", error);
+    },
+  });
+
+  const handleAdd = () => {
     if (!newClient.trim()) {
       toast.error("Please enter a client name");
       return;
     }
-    const newQueue = [...queue, { id: queue.length + 1, name: newClient }];
-    mutateQueue(newQueue);
-    setNewClient("");
-    toast.success("Added to queue");
+    addMutation.mutate(newClient);
   };
 
-  const removeFromQueue = (id: number) => {
-    const newQueue = queue.filter((client) => client.id !== id);
-    mutateQueue(newQueue); // The updateQueue function will handle reordering
-    toast.success("Removed from queue");
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="h-[50%] bg-gradient-to-b from-[#D3E4FD] to-white p-8">
@@ -93,7 +83,7 @@ const Queue = () => {
                   className="text-lg py-6"
                 />
                 <Button
-                  onClick={addToQueue}
+                  onClick={handleAdd}
                   className="flex items-center gap-2 px-6"
                 >
                   <UserPlus className="w-5 h-5" />
@@ -111,14 +101,14 @@ const Queue = () => {
               >
                 <div className="flex items-center gap-4">
                   <span className="text-xl font-semibold text-primary">
-                    #{client.id}
+                    #{client.position}
                   </span>
                   <span className="text-lg">{client.name}</span>
                 </div>
                 {isAuthenticated && (
                   <Button
                     variant="destructive"
-                    onClick={() => removeFromQueue(client.id)}
+                    onClick={() => removeMutation.mutate(client.id)}
                     className="flex items-center gap-2"
                   >
                     <UserMinus className="w-5 h-5" />
