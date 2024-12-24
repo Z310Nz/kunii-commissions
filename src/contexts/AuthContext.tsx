@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     // In a real app, this would make an API call
-    if (username === "haiguulogin" && password === "rahutisk2n5h5r2") {
+    // if (username === "haiguulogin" && password === "rahutisk2n5h5r2") {
+    if (username === "1" && password === "1") {
       setIsAuthenticated(true);
       toast.success("Logged in successfully");
     } else {
