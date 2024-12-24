@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { Button } from "@/components/ui/button";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -12,16 +11,17 @@ const Status = () => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: isOpen = true, isLoading } = useQuery({
+  const { data: isOpen = true, isLoading, isError } = useQuery({
     queryKey: ["commissionStatus"],
     queryFn: getCommissionStatus,
+    retry: 2,
   });
 
   const { mutate: toggleStatus, isPending } = useMutation({
     mutationFn: updateCommissionStatus,
-    onSuccess: () => {
+    onSuccess: (_, newStatus) => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
-      toast.success(`Commissions are now ${isOpen ? "CLOSED" : "OPEN"}`);
+      toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
     },
     onError: (error) => {
       toast.error("Failed to update commission status");
@@ -36,6 +36,20 @@ const Status = () => {
       </div>
     );
   }
+
+  if (isError) {
+    return (
+      <div className="text-center text-red-500">
+        Error loading commission status. Please try again later.
+      </div>
+    );
+  }
+
+  const handleStatusToggle = (newStatus: boolean) => {
+    if (!isPending) {
+      toggleStatus(newStatus);
+    }
+  };
 
   return (
     <div className="h-[50%] bg-gradient-to-b from-[#D3E4FD] to-white p-8">
@@ -66,7 +80,7 @@ const Status = () => {
                 <span className="text-sm text-gray-500">Closed</span>
                 <Switch
                   checked={isOpen}
-                  onCheckedChange={() => toggleStatus(!isOpen)}
+                  onCheckedChange={handleStatusToggle}
                   disabled={isPending}
                   className="data-[state=checked]:bg-green-500"
                 />
