@@ -5,7 +5,7 @@ export const getCommissionStatus = async (): Promise<boolean> => {
     const { data, error } = await supabase
       .from("commission_status")
       .select("is_open")
-      .maybeSingle();
+      .single();
 
     if (error) {
       console.error("Error fetching commission status:", error);
@@ -21,8 +21,7 @@ export const getCommissionStatus = async (): Promise<boolean> => {
 
 export const updateCommissionStatus = async (isOpen: boolean): Promise<void> => {
   try {
-    // First, get the status record
-    const { data: statusRecord, error: fetchError } = await supabase
+    const { data: existingStatus, error: fetchError } = await supabase
       .from("commission_status")
       .select("id")
       .single();
@@ -32,14 +31,13 @@ export const updateCommissionStatus = async (isOpen: boolean): Promise<void> => 
       throw fetchError;
     }
 
-    // Then update it
     const { error: updateError } = await supabase
       .from("commission_status")
       .update({ 
-        is_open: isOpen, 
-        updated_at: new Date().toISOString() 
+        is_open: isOpen,
+        updated_at: new Date().toISOString()
       })
-      .eq("id", statusRecord.id);
+      .eq("id", existingStatus.id);
 
     if (updateError) {
       console.error("Error updating commission status:", updateError);

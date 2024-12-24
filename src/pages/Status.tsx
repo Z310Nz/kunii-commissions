@@ -19,9 +19,9 @@ const Status = () => {
 
   const { mutate: toggleStatus, isPending } = useMutation({
     mutationFn: updateCommissionStatus,
-    onSuccess: (_, newStatus) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
-      toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
+      toast.success(`Commissions are now ${isOpen ? "CLOSED" : "OPEN"}`);
     },
     onError: (error) => {
       toast.error("Failed to update commission status");
@@ -45,9 +45,9 @@ const Status = () => {
     );
   }
 
-  const handleStatusToggle = (newStatus: boolean) => {
+  const handleStatusToggle = () => {
     if (!isPending) {
-      toggleStatus(newStatus);
+      toggleStatus(!isOpen);
     }
   };
 
