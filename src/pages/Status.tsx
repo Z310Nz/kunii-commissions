@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { CheckCircle2, XCircle } from "lucide-react";
@@ -19,9 +20,9 @@ const Status = () => {
 
   const { mutate: toggleStatus, isPending } = useMutation({
     mutationFn: updateCommissionStatus,
-    onSuccess: () => {
+    onSuccess: (_, newStatus) => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
-      toast.success(`Commissions are now ${isOpen ? "CLOSED" : "OPEN"}`);
+      toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
     },
     onError: (error) => {
       toast.error("Failed to update commission status");
@@ -47,7 +48,9 @@ const Status = () => {
 
   const handleStatusToggle = () => {
     if (!isPending) {
-      toggleStatus(!isOpen);
+      const newStatus = !isOpen;
+      console.log("Toggling status to:", newStatus);
+      toggleStatus(newStatus);
     }
   };
 
