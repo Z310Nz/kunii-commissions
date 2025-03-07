@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 
 export const getCommissionStatus = async (): Promise<boolean> => {
@@ -25,14 +26,12 @@ export const updateCommissionStatus = async (
   isOpen: boolean
 ): Promise<boolean> => {
   try {
-    console.log("Updating commission status to:", isOpen);
-
-    // แปลงค่าที่รับมาให้เป็น boolean (กันกรณีรับค่าแปลกๆ เช่น "true", 1, "false")
+    // Ensure we're passing a strict boolean value
     const boolValue = isOpen === true;
+    
+    console.log("Updating commission status to:", boolValue);
 
-    console.log("Converted value for update:", boolValue);
-
-    // ดึง ID ปัจจุบันของ status ถ้ามี
+    // Check if status record exists
     const { data: existingStatus, error: fetchError } = await supabase
       .from("commission_status")
       .select("id")
@@ -46,11 +45,11 @@ export const updateCommissionStatus = async (
 
     let updatedStatus;
     if (existingStatus) {
-      // ถ้ามีเรคอร์ดอยู่แล้ว -> อัปเดตค่า
+      // Update existing record
       const { data, error: updateError } = await supabase
         .from("commission_status")
         .update({
-          is_open: boolValue, // ✅ ค่าเป็น true หรือ false แน่นอน
+          is_open: boolValue,
           updated_at: new Date().toISOString(),
         })
         .eq("id", existingStatus.id)
@@ -63,8 +62,9 @@ export const updateCommissionStatus = async (
       }
 
       updatedStatus = data?.is_open;
+      console.log("Updated status record with value:", updatedStatus);
     } else {
-      // ถ้ายังไม่มีเรคอร์ด -> สร้างใหม่
+      // Create new record if none exists
       const { data, error: insertError } = await supabase
         .from("commission_status")
         .insert([{ is_open: boolValue, updated_at: new Date().toISOString() }])
@@ -77,12 +77,10 @@ export const updateCommissionStatus = async (
       }
 
       updatedStatus = data?.is_open;
+      console.log("Created new status record with value:", updatedStatus);
     }
 
-    console.log(
-      "Successfully updated commission status to:",
-      Boolean(updatedStatus)
-    );
+    // Return the actual updated value from the database
     return Boolean(updatedStatus);
   } catch (error) {
     console.error("Error in updateCommissionStatus:", error);

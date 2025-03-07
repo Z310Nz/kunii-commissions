@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { CheckCircle2, XCircle } from "lucide-react";
@@ -25,9 +26,9 @@ const Status = () => {
   });
 
   const { mutate: toggleStatus, isPending } = useMutation({
-    mutationFn: (prevStatus: boolean) => updateCommissionStatus(!prevStatus),
+    mutationFn: updateCommissionStatus,
     onSuccess: (newStatus) => {
-      queryClient.invalidateQueries({ queryKey: ["commissions", "status"] });
+      queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
       if (typeof newStatus === "boolean") {
         toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
         console.log("Status updated successfully to:", newStatus);
@@ -62,9 +63,10 @@ const Status = () => {
 
   const handleStatusToggle = () => {
     if (!isPending) {
-      const newStatus = !isOpen;
-      console.log("Toggling status to:", newStatus);
-      toggleStatus(newStatus);
+      console.log("Current status:", isOpen);
+      console.log("Setting status to:", !isOpen);
+      // Pass the new desired state (opposite of current)
+      toggleStatus(!isOpen);
     }
   };
 
