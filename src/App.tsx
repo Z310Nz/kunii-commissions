@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,7 +10,6 @@ import Prices from "./pages/Prices";
 import Status from "./pages/Status";
 import Queue from "./pages/Queue";
 import Login from "./pages/admin/Login";
-import Adminlogin from "./pages/admin/Login";
 import AdminPrices from "./pages/admin/Prices";
 
 const queryClient = new QueryClient();
