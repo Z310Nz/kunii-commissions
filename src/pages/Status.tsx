@@ -12,7 +12,7 @@ const Status = () => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: isOpen = true, isLoading, isError } = useQuery({
+  const { data: isOpen = false, isLoading, isError } = useQuery({
     queryKey: ["commissionStatus"],
     queryFn: getCommissionStatus,
     retry: 2,
@@ -20,9 +20,10 @@ const Status = () => {
 
   const { mutate: toggleStatus, isPending } = useMutation({
     mutationFn: updateCommissionStatus,
-    onSuccess: (_, newStatus) => {
+    onSuccess: (newStatus) => {
       queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
       toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
+      console.log("Status updated successfully to:", newStatus);
     },
     onError: (error) => {
       toast.error("Failed to update commission status");

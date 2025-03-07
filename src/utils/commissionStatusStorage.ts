@@ -15,7 +15,7 @@ export const getCommissionStatus = async (): Promise<boolean> => {
     }
 
     console.log("Commission status fetched:", data?.is_open);
-    return data?.is_open ?? true;
+    return data?.is_open ?? false;
   } catch (error) {
     console.error("Error in getCommissionStatus:", error);
     throw error;
@@ -52,7 +52,7 @@ export const updateCommissionStatus = async (isOpen: boolean): Promise<boolean> 
     }
 
     console.log("Successfully updated commission status to:", isOpen);
-    return isOpen; // Return the new status so we can use it in the onSuccess callback
+    return isOpen;
   } catch (error) {
     console.error("Error in updateCommissionStatus:", error);
     throw error;
