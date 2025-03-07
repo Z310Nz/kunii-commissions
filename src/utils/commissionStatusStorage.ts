@@ -38,11 +38,14 @@ export const updateCommissionStatus = async (isOpen: boolean): Promise<boolean> 
 
     console.log("Found status record with ID:", existingStatus.id);
 
-    // Explicitly pass a boolean value
+    // Ensure we're working with a boolean and not string/number
+    const boolValue = isOpen === true;
+    console.log("Converted value for update:", boolValue);
+
     const { data, error: updateError } = await supabase
       .from("commission_status")
       .update({ 
-        is_open: Boolean(isOpen),
+        is_open: boolValue,
         updated_at: new Date().toISOString()
       })
       .eq("id", existingStatus.id)

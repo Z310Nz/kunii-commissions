@@ -26,8 +26,8 @@ const Status = () => {
       console.log("Status updated successfully to:", newStatus);
     },
     onError: (error) => {
+      console.error("Mutation error details:", error);
       toast.error("Failed to update commission status");
-      console.error("Error updating status:", error);
     },
   });
 
