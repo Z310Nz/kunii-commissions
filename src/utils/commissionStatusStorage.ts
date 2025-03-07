@@ -15,7 +15,7 @@ export const getCommissionStatus = async (): Promise<boolean> => {
     }
 
     console.log("Commission status fetched:", data?.is_open);
-    return data?.is_open ?? false;
+    return Boolean(data?.is_open); // Ensure boolean type
   } catch (error) {
     console.error("Error in getCommissionStatus:", error);
     throw error;
@@ -38,21 +38,24 @@ export const updateCommissionStatus = async (isOpen: boolean): Promise<boolean> 
 
     console.log("Found status record with ID:", existingStatus.id);
 
-    const { error: updateError } = await supabase
+    // Explicitly pass a boolean value
+    const { data, error: updateError } = await supabase
       .from("commission_status")
       .update({ 
-        is_open: isOpen,
+        is_open: Boolean(isOpen),
         updated_at: new Date().toISOString()
       })
-      .eq("id", existingStatus.id);
+      .eq("id", existingStatus.id)
+      .select('is_open')
+      .single();
 
     if (updateError) {
       console.error("Error updating commission status:", updateError);
       throw updateError;
     }
 
-    console.log("Successfully updated commission status to:", isOpen);
-    return isOpen;
+    console.log("Successfully updated commission status to:", Boolean(data?.is_open));
+    return Boolean(data?.is_open); // Return the actual updated value from Supabase
   } catch (error) {
     console.error("Error in updateCommissionStatus:", error);
     throw error;
