@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { CheckCircle2, XCircle } from "lucide-react";
@@ -6,24 +5,38 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import BackButton from "@/components/BackButton";
 import { Switch } from "@/components/ui/switch";
-import { getCommissionStatus, updateCommissionStatus } from "@/utils/commissionStatusStorage";
+import {
+  getCommissionStatus,
+  updateCommissionStatus,
+} from "@/utils/commissionStatusStorage";
 
 const Status = () => {
   const { isAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: isOpen = false, isLoading, isError } = useQuery({
+  const {
+    data: isOpen = false,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["commissionStatus"],
     queryFn: getCommissionStatus,
     retry: 2,
   });
 
   const { mutate: toggleStatus, isPending } = useMutation({
-    mutationFn: updateCommissionStatus,
+    mutationFn: (prevStatus: boolean) => updateCommissionStatus(!prevStatus),
     onSuccess: (newStatus) => {
-      queryClient.invalidateQueries({ queryKey: ["commissionStatus"] });
-      toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
-      console.log("Status updated successfully to:", newStatus);
+      queryClient.invalidateQueries({ queryKey: ["commissions", "status"] });
+      if (typeof newStatus === "boolean") {
+        toast.success(`Commissions are now ${newStatus ? "OPEN" : "CLOSED"}`);
+        console.log("Status updated successfully to:", newStatus);
+      } else {
+        console.warn(
+          "Unexpected response from updateCommissionStatus:",
+          newStatus
+        );
+      }
     },
     onError: (error) => {
       console.error("Mutation error details:", error);
